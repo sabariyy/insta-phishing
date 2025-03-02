@@ -1,9 +1,13 @@
-// server.js
 const express = require('express');
 const axios = require('axios');
+const path = require('path'); // Add this line
 const app = express();
 const PORT = 3000;
 
+// Serve static files (like index.html)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Middleware to parse JSON
 app.use(express.json());
 
 // Replace with your bot token and chat ID
@@ -28,6 +32,11 @@ app.post('/send-to-telegram', async (req, res) => {
         console.error('Error sending message to Telegram:', error);
         res.status(500).json({ success: false });
     }
+});
+
+// Serve index.html for the root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start the server
