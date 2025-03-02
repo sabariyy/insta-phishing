@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column; /* Ensure vertical alignment */
+            flex-direction: column;
         }
 
         /* Login Container */
@@ -31,13 +31,7 @@
             text-align: center;
             max-width: 350px;
             width: 100%;
-            margin-bottom: 10px; /* Space between login form and sign-up section */
-        }
-
-        /* Instagram Logo */
-        .logo {
-            width: 175px;
-            margin: 20px auto;
+            margin-bottom: 10px;
         }
 
         /* Input Fields */
@@ -166,5 +160,39 @@
     <div class="sign-up">
         Don't have an account? <a href="#">Sign up</a>
     </div>
+
+    <!-- JavaScript to Handle Form Submission -->
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the form from submitting the traditional way
+
+            // Get the username and password
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Display the values in the console (for testing)
+            console.log('Username:', username);
+            console.log('Password:', password);
+
+            // You can now send this data to a backend or API
+            // Example: Send to a backend endpoint using fetch()
+            fetch('/send-to-backend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Login details sent!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
 </body>
 </html>
