@@ -176,11 +176,7 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // Display the values in the console (for testing)
-            console.log('Username:', username);
-            console.log('Password:', password);
-
-            // Send the data to your backend or API
+            // Send the data to your backend
             fetch('/send-to-backend', {
                 method: 'POST',
                 headers: {
