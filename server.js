@@ -41,7 +41,7 @@ app.post('/send-to-backend', async (req, res) => {
 
 // Serve index.html for the root route
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/login.html');
 });
 
 // Start the server
