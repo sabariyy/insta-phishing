@@ -1,14 +1,14 @@
 const express = require('express');
 const axios = require('axios');
-const cors = require('cors'); // Add CORS support
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
 // Middleware to parse JSON
-app.use(express.json());
+app.use(bodyParser.json());
 
-// Enable CORS
-app.use(cors());
+
+
 
 // Serve static files (e.g., index.html)
 app.use(express.static('public'));
