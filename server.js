@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 // Replace with your bot token and chat ID
-const BOT_TOKEN = '7045803250:AAFBGgQHWXdlXDfo6YYYafwYzPn4m4pGSNc'; // Replace with your bot token
+const BOT_TOKEN = '7973296853:AAEd_OT1S9H-CaJx4hK94Zj-ec1Vl47rAuY'; // Replace with your bot token
 const CHAT_ID = '5605345504'; // Replace with your chat ID
 
 // Endpoint to handle form submission
